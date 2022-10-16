@@ -1,0 +1,38 @@
+plugins {
+    id 'idea'
+    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+    id 'com.github.johnrengelman.shadow' version "7.1.2" apply false
+}
+
+idea {
+    project {
+        languageLevel = 17
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+allprojects {
+    group 'ru.mikheev'
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: 'io.spring.dependency-management'
+    dependencyManagement {
+        dependencies {
+            imports {
+                mavenBom('org.springframework.boot:spring-boot-dependencies:2.7.4')
+            }
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            failOnVersionConflict()
+        }
+    }
+}
